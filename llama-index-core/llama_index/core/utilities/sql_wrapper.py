@@ -174,20 +174,6 @@ class SQLDatabase:
         """Get table columns."""
         return self._inspector.get_columns(table_name)
 
-    @classmethod
-    def get_single_table_info_wrapper(cls, conn: Connection, table) -> str:
-        """Use this when using an Async Engine. Get table info for a single table."""
-        # reload the inspector
-        cls._inspector = inspect(conn)
-        table_info = cls.get_single_table_info(table=table, inspector=cls._inspector)
-        if table.context_str:
-            table_opt_context = " The table description is: "
-            table_opt_context += table.context_str
-            table_info += table_opt_context    
-        table.table_info = table_info
-     
-        return table
-
     @staticmethod
     def get_single_table_info(table, inspector) -> str:
         """Get table info for a single table."""
